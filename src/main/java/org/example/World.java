@@ -4,7 +4,6 @@ import org.example.entities.Airport;
 import org.example.entities.Plane;
 import org.example.repository.AirportRepository;
 import org.example.repository.PlaneRepository;
-import org.example.view.SimpleUserInterface;
 
 import java.time.LocalDateTime;
 
@@ -12,19 +11,23 @@ public class World {
     private static boolean running = true;
 
     public static void main(String[] args) {
-        System.out.println("Program started");
-
         createAirports();
+
+        TrafficGenerator trafficGenerator = new TrafficGenerator();
+        trafficGenerator.read();
+
+
+
 
         // Automated Plane creation
 //        createPlanes();
 
         // Manual Plane creation
 //        UserInterface.run();
-        SimpleUserInterface.run();
+//        SimpleUserInterface.run();
 
         // Start the simulation loop
-//        startControllingAirTraffic();
+        startControllingAirTraffic();
 
 //        stopAirTraffic();
     }
