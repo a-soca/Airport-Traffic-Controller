@@ -1,6 +1,7 @@
 package org.example.view;
 
-import org.example.TrafficGenerator;
+import org.example.entities.Airport;
+import org.example.repository.AirportRepository;
 
 import java.util.Scanner;
 
@@ -14,6 +15,7 @@ public class MainMenu extends UserInterface {
         /////////////////////////////
         // Perform user actions here
         /////////////////////////////
+
         boolean exit = false;
         printTitle("Select an option:");
         while (!exit) {
@@ -33,6 +35,9 @@ public class MainMenu extends UserInterface {
                     createPlanes();
                     exit = true;
                     break;
+                case "Settings":
+                    settings();
+                    break;
                 case "Exit":
                     exit = true;
                     stopAirTraffic();
@@ -44,6 +49,24 @@ public class MainMenu extends UserInterface {
         }
     }
 
+    private static void settings() {
+        printTitle("Settings");
+        System.out.println("Enter custom wait time between landings:");
+
+        String waitTime = scanner.nextLine();
+        int separation;
+        try {
+           separation = Integer.parseInt(waitTime);
+        } catch (NumberFormatException e) {
+            printTitle("Error : Invalid wait time");
+            return;
+        }
+
+        for(Airport airport : AirportRepository.getAllAirports()) {
+            airport.setLandingTimeSeparation(separation);
+        }
+    }
+
     /**
      * Prints the options available to the user
      */
@@ -52,6 +75,7 @@ public class MainMenu extends UserInterface {
                 "Basic           - Land planes individually\n" +
                 "Manual Batch    - Generate a batch of scheduled flights\n" +
                 "Automated Batch - Run a simulation from a CSV\n" +
+                "Settings        - Customise default parameters\n" +
                 "Exit            - Exit the program\n"
         );
     }

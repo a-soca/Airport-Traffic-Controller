@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Airport extends Location {
     private final ArrayList<Plane> incomingFlights;
     private final ArrayList<Plane> landedFlights;
-    private final Duration landingTimeSeparation = Duration.ofSeconds(60);
+    private Duration landingTimeSeparation = Duration.ofSeconds(60);
 
     private final AirTrafficController airTrafficController;
 
@@ -37,6 +37,10 @@ public class Airport extends Location {
 
     public Duration getLandingTimeSeparation() {
         return landingTimeSeparation;
+    }
+
+    public void setLandingTimeSeparation(int seconds) {
+        this.landingTimeSeparation = Duration.ofSeconds(seconds);
     }
 
     public void addLandedFlight(Plane plane) {

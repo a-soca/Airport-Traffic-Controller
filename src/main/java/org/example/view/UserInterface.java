@@ -64,7 +64,7 @@ public class UserInterface {
             return;
         }
 
-        System.out.println("Enter arrival time from now (in seconds): ");
+        System.out.println("Enter arrival time from simulator start (in seconds): ");
         String arrivalDelay = scanner.nextLine();
 
         try {
