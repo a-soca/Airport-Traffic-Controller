@@ -1,4 +1,4 @@
-package org.example;
+package org.example.view;
 
 import org.example.entities.Airport;
 import org.example.entities.Plane;
@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class UserInterface {
-    private static final Scanner scanner = new Scanner(System.in); // Set the scanner source
+    protected static final Scanner scanner = new Scanner(System.in); // Set the scanner source
 
-    public static void configureSimulator() {
+    public static void run() {
         /////////////////////////////
         // Perform user actions here
         /////////////////////////////
@@ -44,8 +44,6 @@ public class UserInterface {
             }
         }
     }
-
-
 
     private static void addFlight() {
         System.out.println("Enter flight code: ");
@@ -82,13 +80,14 @@ public class UserInterface {
         printTitle("Flight " + flightCode + " Added successfully");
     }
 
-    private static void printAirports() {
+    protected static void printAirports() {
         if(AirportRepository.getAllAirports().isEmpty()) {
             System.out.println("No airports found");
         } else {
             for (Airport airport : AirportRepository.getAllAirports()) {
                 System.out.println(airport.toString());
             }
+            System.out.println();
         }
     }
 
@@ -99,13 +98,14 @@ public class UserInterface {
             for (Plane plane : PlaneRepository.getAllPlanes()) {
                 System.out.println(plane.toString());
             }
+            System.out.println();
         }
     }
 
     /**
      * Clears the screen by adding 50 carriage returns (used for cross compatability between all terminals)
      */
-    private static void clearScreen() {
+    protected static void clearScreen() {
         System.out.println(new String(new char[50]).replace("\0", "\r\n"));
     }
 
@@ -113,7 +113,7 @@ public class UserInterface {
      * Prints the header of the application alongside a prompt
      * @param title The prompt to show the user under the banner
      */
-    private static void printTitle(String title) {
+    protected static void printTitle(String title) {
         clearScreen();
         System.out.println( "-------------------------------" +
                 "\n\tAir Traffic Controller" +

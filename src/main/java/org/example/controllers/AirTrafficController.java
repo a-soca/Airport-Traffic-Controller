@@ -1,4 +1,4 @@
-package org.example;
+package org.example.controllers;
 
 import org.example.entities.Airport;
 import org.example.entities.Plane;

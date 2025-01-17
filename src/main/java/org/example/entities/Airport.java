@@ -1,6 +1,6 @@
 package org.example.entities;
 
-import org.example.AirTrafficController;
+import org.example.controllers.AirTrafficController;
 import org.example.repository.AirportRepository;
 
 import java.time.Duration;

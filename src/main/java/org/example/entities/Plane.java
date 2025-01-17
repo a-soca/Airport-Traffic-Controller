@@ -1,13 +1,12 @@
 package org.example.entities;
 
 
-import org.example.Pilot;
+import org.example.controllers.Pilot;
 import org.example.repository.AirportRepository;
 import org.example.repository.PlaneRepository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.concurrent.TimeUnit;
 
 import static org.example.repository.AirportRepository.getAirport;
 
