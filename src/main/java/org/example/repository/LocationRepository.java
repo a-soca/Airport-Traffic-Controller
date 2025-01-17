@@ -1,7 +1,9 @@
 package org.example.repository;
 
 import org.example.entities.Location;
+import org.example.entities.Vehicle;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LocationRepository {
@@ -26,5 +28,9 @@ public class LocationRepository {
 
     public Location getLocation(String id) {
         return locations.get(id);
+    }
+
+    public ArrayList<Location> getLocations() {
+        return new ArrayList<>(locations.values());
     }
 }
