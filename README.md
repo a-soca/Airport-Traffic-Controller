@@ -1,6 +1,13 @@
 # Airport Traffic Controller
+
+| Index |
+| ----- |
+| [Brief](#brief) |
+| [Requirements](#requirements) |
+| [User Interface](#user-interface) |
+
 ## Brief
-Write A system to assist with controlling the flights that land at different airports
+Write a system to assist with controlling the flights that land at different airports
 
 ## Requirements
 - The system manages three airports with IDs: "LGW", "EMA" and "MAN".
