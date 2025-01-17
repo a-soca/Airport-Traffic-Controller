@@ -4,8 +4,6 @@ import org.example.entities.Plane;
 import org.example.entities.Vehicle;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 public class PlaneRepository extends VehicleRepository {
     private static final VehicleRepository planes = new VehicleRepository();

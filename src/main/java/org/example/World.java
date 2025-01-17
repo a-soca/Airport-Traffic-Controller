@@ -7,14 +7,27 @@ import org.example.repository.PlaneRepository;
 
 import java.time.LocalDateTime;
 
-public class Main {
+public class World {
+    private static boolean running = true;
+
     public static void main(String[] args) {
         System.out.println("Program started");
-        createAirports();
-        createPlanes();
 
-        landPlanes();
+        createAirports();
+
+        // Automated Plane creation
+//        createPlanes();
+
+        // Manual Plane creation
+        UserInterface.configureSimulator();
+
+        // Start the simulation loop
+        startControllingAirTraffic();
+
+//        stopAirTraffic();
     }
+
+
 
     private static void createAirports() {
         String[] airportCodes = new String[] {
@@ -24,7 +37,7 @@ public class Main {
         };
 
         for(String airportCode : airportCodes) {
-            AirportRepository.addAirport(new Airport(airportCode));
+            new Airport(airportCode);
         }
     }
 
@@ -42,7 +55,20 @@ public class Main {
 
     private static void landPlanes() {
         for(Plane plane : PlaneRepository.getAllPlanes()) {
-            plane.getArrivalLocation().landPlane(plane);
+            plane.getArrivalLocation().getAirTrafficController().landPlane(plane);
         }
+    }
+
+    private static void startControllingAirTraffic() {
+        while(running) {
+            for(Airport airport : AirportRepository.getAllAirports()) {
+                airport.getAirTrafficController().controlTraffic();
+            }
+        }
+    }
+
+    private static void stopAirTraffic() {
+        running = false;
+        landPlanes();
     }
 }
