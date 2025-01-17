@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TrafficGenerator {
-    public void read() {
+    public void readBlueprint() {
         File file = new File("src/main/resources/Flights.csv");
 
         FileReader fileReader = null;
@@ -24,7 +24,7 @@ public class TrafficGenerator {
         ArrayList<String> arrivalTimes = new ArrayList<>();
         ArrayList<String> arrivalLocations = new ArrayList<>();
 
-        String line; // The line read by the buffered reader
+        String line; // The line readBlueprint by the buffered reader
         String[] tokens; // Each cell of the CSV (using the comma as a delimiter)
 
         while (true) {

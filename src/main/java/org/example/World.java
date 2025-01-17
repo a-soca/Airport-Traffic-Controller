@@ -4,8 +4,8 @@ import org.example.entities.Airport;
 import org.example.entities.Plane;
 import org.example.repository.AirportRepository;
 import org.example.repository.PlaneRepository;
-
-import java.time.LocalDateTime;
+import org.example.view.SimpleUserInterface;
+import org.example.view.UserInterface;
 
 public class World {
     private static boolean running = true;
@@ -13,18 +13,19 @@ public class World {
     public static void main(String[] args) {
         createAirports();
 
-        TrafficGenerator trafficGenerator = new TrafficGenerator();
-        trafficGenerator.read();
+        int mode = 1;
 
-
-
-
-        // Automated Plane creation
-//        createPlanes();
-
-        // Manual Plane creation
-//        UserInterface.run();
-//        SimpleUserInterface.run();
+        switch (mode) {
+            case 1: // Basic single plane interface
+                SimpleUserInterface.run();
+                break;
+            case 2: // Manual Plane creation
+                UserInterface.run();
+                break;
+            case 3: // Automated Plane creation
+                createPlanes();
+                break;
+        }
 
         // Start the simulation loop
         startControllingAirTraffic();
@@ -46,21 +47,8 @@ public class World {
     }
 
     private static void createPlanes() {
-        String[] planeCodes = new String[] {
-                "1XXX",
-                "2XXX",
-                "3XXX"
-        };
-
-        for(String planeCode : planeCodes) {
-            new Plane(planeCode, LocalDateTime.now().plusSeconds(5), "LGW");
-        }
-    }
-
-    private static void landPlanes() {
-        for(Plane plane : PlaneRepository.getAllPlanes()) {
-            plane.getArrivalLocation().getAirTrafficController().landPlane(plane);
-        }
+        TrafficGenerator trafficGenerator = new TrafficGenerator();
+        trafficGenerator.readBlueprint();
     }
 
     private static void startControllingAirTraffic() {
@@ -71,8 +59,7 @@ public class World {
         }
     }
 
-    private static void stopAirTraffic() {
+    public static void stopAirTraffic() {
         running = false;
-        landPlanes();
     }
 }
