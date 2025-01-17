@@ -32,9 +32,9 @@ public abstract class UserInterface {
     protected void printTitle(String title) {
         clearScreen();
         System.out.println(
-                "-------------------------------" +
+                "------------------------------" +
                 "\n\tAir Traffic Controller" +
-                "\n-------------------------------"); // Output the name of the application
+                "\n------------------------------"); // Output the name of the application
         System.out.println("-> " + title + "\n");
     }
 
