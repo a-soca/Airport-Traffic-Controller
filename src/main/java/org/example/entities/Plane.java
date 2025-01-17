@@ -1,6 +1,8 @@
 package org.example.entities;
 
 
+import org.example.repository.PlaneRepository;
+
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
@@ -10,8 +12,14 @@ public class Plane extends Vehicle {
     private LocalDateTime arrivalTime;
     private String arrivalLocation;
 
-    public Plane(String id) {
-        super(id);
+    public Plane(String id, LocalDateTime plannedArrivalTime, String arrivalLocation) {
+        super(id); // Set the plane ID
+
+        // Set the plane's travel plan
+        setArrivalTime(plannedArrivalTime);
+        setArrivalLocation(arrivalLocation);
+
+        PlaneRepository.addPlane(this); // Add the plane to the repository
     }
 
     public LocalDateTime getArrivalTime() {

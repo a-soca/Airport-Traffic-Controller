@@ -3,14 +3,17 @@ package org.example;
 import org.example.entities.Airport;
 import org.example.entities.Plane;
 import org.example.repository.AirportRepository;
+import org.example.repository.PlaneRepository;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Program started");
         createAirports();
         createPlanes();
+
+        landPlanes();
     }
 
     private static void createAirports() {
@@ -32,13 +35,14 @@ public class Main {
                 "3XXX"
         };
 
-        ArrayList<Plane> planes = new ArrayList<>();
-
         for(String planeCode : planeCodes) {
-            planes.add(new Plane(planeCode));
+            new Plane(planeCode, LocalDateTime.now().plusSeconds(5), "LGW");
         }
+    }
 
-        AirportRepository.getAirport("LGW").landPlane(planes.getFirst());
-        AirportRepository.getAirport("LGW").landPlane(planes.getLast());
+    private static void landPlanes() {
+        for(Plane plane : PlaneRepository.getAllPlanes()) {
+            plane.getArrivalLocation().landPlane(plane);
+        }
     }
 }
