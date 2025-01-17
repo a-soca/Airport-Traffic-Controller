@@ -6,6 +6,8 @@ import org.example.repository.AirportRepository;
 
 import java.time.LocalDateTime;
 
+import static org.example.World.stopAirTraffic;
+
 public class SimpleUserInterface extends UserInterface {
 
     public static void run() {
@@ -30,6 +32,7 @@ public class SimpleUserInterface extends UserInterface {
                     break;
                 case "Exit":
                     exit = true;
+                    stopAirTraffic();
                     break;
                 default:
                     printTitle("Invalid Option. Please try again:");

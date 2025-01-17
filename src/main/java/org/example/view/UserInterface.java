@@ -1,20 +1,29 @@
 package org.example.view;
 
+import org.example.TrafficGenerator;
 import org.example.entities.Airport;
 import org.example.entities.Plane;
 import org.example.repository.AirportRepository;
 import org.example.repository.PlaneRepository;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
     protected static final Scanner scanner = new Scanner(System.in); // Set the scanner source
 
+    private static final ArrayList<String> flightCodes = new ArrayList<>();
+    private static final ArrayList<String> arrivalTimes = new ArrayList<>();
+    private static final ArrayList<String> arrivalLocations = new ArrayList<>();
+
     public static void run() {
         /////////////////////////////
         // Perform user actions here
         /////////////////////////////
+
+        TrafficGenerator trafficGenerator = new TrafficGenerator();
 
         boolean exit = false;
         printTitle("Select an option:");
@@ -37,6 +46,7 @@ public class UserInterface {
                     break;
                 case "StartSimulator":
                     exit = true;
+                    trafficGenerator.generateFlights(flightCodes, arrivalTimes, arrivalLocations);
                     break;
                 default:
                     printTitle("Invalid Option. Please try again:");
@@ -56,17 +66,13 @@ public class UserInterface {
 
         System.out.println("Enter arrival time from now (in seconds): ");
         String arrivalDelay = scanner.nextLine();
-        int arrivalDelayParsed;
 
         try {
-            arrivalDelayParsed = Integer.parseInt(arrivalDelay);
+            Integer.parseInt(arrivalDelay);
         } catch (NumberFormatException e) {
             printTitle("Error : Invalid arrival delay");
             return;
         }
-
-        LocalDateTime arrivalTime = LocalDateTime.now().plusSeconds(arrivalDelayParsed);
-
         printAirports();
         System.out.println("Enter arrival airport code: ");
         String arrivalAirport = scanner.nextLine();
@@ -76,7 +82,10 @@ public class UserInterface {
             return;
         }
 
-        new Plane(flightCode, arrivalTime, arrivalAirport);
+        flightCodes.add(flightCode);
+        arrivalTimes.add(arrivalDelay);
+        arrivalLocations.add(arrivalAirport);
+
         printTitle("Flight " + flightCode + " Added successfully");
     }
 
@@ -92,11 +101,15 @@ public class UserInterface {
     }
 
     private static void printFlights() {
-        if(PlaneRepository.getAllPlanes().isEmpty()) {
+        if(flightCodes.isEmpty()) {
             System.out.println("No flights found");
         } else {
-            for (Plane plane : PlaneRepository.getAllPlanes()) {
-                System.out.println(plane.toString());
+            for (int i = 0; i < flightCodes.size(); i++) {
+                System.out.println(
+                        "Plane Code : " + flightCodes.get(i)
+                        + " | Arrival time : " + arrivalTimes.get(i) + "s"
+                        + " | Arrival location : " + arrivalLocations.get(i)
+                );
             }
             System.out.println();
         }
@@ -115,7 +128,8 @@ public class UserInterface {
      */
     protected static void printTitle(String title) {
         clearScreen();
-        System.out.println( "-------------------------------" +
+        System.out.println(
+                "-------------------------------" +
                 "\n\tAir Traffic Controller" +
                 "\n-------------------------------"); // Output the name of the application
         System.out.println("-> " + title + "\n");
@@ -125,7 +139,8 @@ public class UserInterface {
      * Prints the options available to the user
      */
     private static void printMenu() {
-        System.out.println( "AddFlight      - Add a plane to the Simulator\n" +
+        System.out.println(
+                "AddFlight      - Add a plane to the Simulator\n" +
                 "GetFlights     - Show a list of flights\n" +
                 "GetAirports    - Show a list of airports\n" +
                 "StartSimulator - Start the simulator\n"
