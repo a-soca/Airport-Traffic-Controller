@@ -9,9 +9,13 @@ import java.util.HashMap;
 public class LocationRepository {
     private final HashMap<String, Location> locations;
 
+    /**
+     * A repository used to store {@link Location} objects efficiently via a {@link HashMap}
+     */
     public LocationRepository() {
         locations = new HashMap<>();
     }
+
 
     public void addLocation(Location location) {
         String id = location.getID(); // Get the location ID
@@ -30,6 +34,10 @@ public class LocationRepository {
         return locations.get(id);
     }
 
+    /**
+     * Gets all locations in the repository
+     * @return An {@link ArrayList} of {@link Location} objects stored in the repository
+     */
     public ArrayList<Location> getLocations() {
         return new ArrayList<>(locations.values());
     }

@@ -5,30 +5,42 @@ import org.example.entities.Location;
 import java.util.ArrayList;
 
 public class AirportRepository {
-    private static final LocationRepository airports = new LocationRepository();
+    private final LocationRepository airports; // Used to store the airports added to the repository
 
-    public static void addAirport(Airport airport) {
+    /**
+     * A repository used to store {@link Airport} objects
+     */
+    public AirportRepository() {
+        this.airports = new LocationRepository();
+    }
+
+    public void addAirport(Airport airport) {
         airports.addLocation(airport);
     }
 
-    public static void removeAirport(String id) {
+    public void removeAirport(String id) {
         Airport airport = (Airport) airports.getLocation(id); // Get the Location object from the hashmap
 
         airports.removeLocation(airport.getID()); // Remove the Location object from the hashmap
     }
 
-    public static Airport getAirport(String id) {
+    public Airport getAirport(String id) {
         return (Airport) airports.getLocation(id);
     }
 
-    public static ArrayList<Airport> getAllAirports() {
-        ArrayList<Location> allLocations = airports.getLocations();
-        ArrayList<Airport> allAirports = new ArrayList<>();
+    /**
+     * Finds all airports added to the repository and returns the objects in an array list
+     * @return An {@link ArrayList} of {@link Airport} objects
+     */
+    public ArrayList<Airport> getAllAirports() {
+        ArrayList<Location> allLocations = airports.getLocations(); // Get all location codes stored in the repository
+        ArrayList<Airport> allAirports = new ArrayList<>(); // Create a new array list to store the airport objects
 
+        // For all locations in the repository,
         for(Location location : allLocations) {
-            allAirports.add((Airport) location);
+            allAirports.add((Airport) location); // Cast the location to an Airport and store it in the airport array
         }
 
-        return allAirports;
+        return allAirports; // Return the airports
     }
 }

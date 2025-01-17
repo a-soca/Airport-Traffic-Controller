@@ -1,13 +1,13 @@
 package org.example.repository;
 
 import org.example.entities.Plane;
-import org.example.entities.Vehicle;
-
-import java.util.ArrayList;
 
 public class PlaneRepository extends VehicleRepository {
     private static final VehicleRepository planes = new VehicleRepository();
 
+    /**
+     * A repository used to store {@link Plane} objects
+     */
     public static void addPlane(Plane plane) {
         planes.addVehicle(plane);
     }
@@ -20,16 +20,5 @@ public class PlaneRepository extends VehicleRepository {
 
     public static Plane getPlane(String id) {
         return (Plane) planes.getVehicle(id);
-    }
-
-    public static ArrayList<Plane> getAllPlanes() {
-        ArrayList<Vehicle> allVehicles = planes.getVehicles();
-        ArrayList<Plane> allPlanes = new ArrayList<>();
-
-        for(Vehicle vehicle : allVehicles) {
-            allPlanes.add((Plane) vehicle);
-        }
-
-        return allPlanes;
     }
 }
