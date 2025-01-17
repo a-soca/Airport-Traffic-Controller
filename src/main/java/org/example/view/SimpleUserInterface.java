@@ -22,11 +22,11 @@ public class SimpleUserInterface extends UserInterface {
 
             String option = scanner.nextLine();
             switch(option) {
-                case "LandPlane":
+                case "Land Plane":
                     printTitle("Land a Plane");
                     landFlight();
                     break;
-                case "GetAirports":
+                case "Get Airports":
                     printTitle("Available Airports:");
                     printAirports();
                     break;
@@ -60,8 +60,9 @@ public class SimpleUserInterface extends UserInterface {
      * Prints the options available to the user
      */
     private static void printMenu() {
-        System.out.println( "LandPlane      - Attempt to land a plane\n" +
-                "GetAirports    - Show a list of airports\n" +
+        System.out.println(
+                "Land Plane     - Attempt to land a plane\n" +
+                "Get Airports   - Show a list of airports\n" +
                 "Exit           - Exit the program\n"
         );
     }

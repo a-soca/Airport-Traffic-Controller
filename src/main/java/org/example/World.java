@@ -4,8 +4,11 @@ import org.example.entities.Airport;
 import org.example.entities.Plane;
 import org.example.repository.AirportRepository;
 import org.example.repository.PlaneRepository;
+import org.example.view.MainMenu;
 import org.example.view.SimpleUserInterface;
 import org.example.view.UserInterface;
+
+import java.util.Scanner;
 
 public class World {
     private static boolean running = true;
@@ -13,24 +16,10 @@ public class World {
     public static void main(String[] args) {
         createAirports();
 
-        int mode = 1;
-
-        switch (mode) {
-            case 1: // Basic single plane interface
-                SimpleUserInterface.run();
-                break;
-            case 2: // Manual Plane creation
-                UserInterface.run();
-                break;
-            case 3: // Automated Plane creation
-                createPlanes();
-                break;
-        }
+        MainMenu.run();
 
         // Start the simulation loop
         startControllingAirTraffic();
-
-//        stopAirTraffic();
     }
 
 
@@ -46,7 +35,7 @@ public class World {
         }
     }
 
-    private static void createPlanes() {
+    public static void createPlanes() {
         TrafficGenerator trafficGenerator = new TrafficGenerator();
         trafficGenerator.readBlueprint();
     }

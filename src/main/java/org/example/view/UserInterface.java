@@ -32,19 +32,19 @@ public class UserInterface {
 
             String option = scanner.nextLine();
             switch(option) {
-                case "AddFlight":
+                case "Add Flight":
                     printTitle("Add a Flight");
                     addFlight();
                     break;
-                case "GetFlights":
+                case "Get Flights":
                     printTitle("Planned Flights:");
                     printFlights();
                     break;
-                case "GetAirports":
+                case "Get Airports":
                     printTitle("Available Airports:");
                     printAirports();
                     break;
-                case "StartSimulator":
+                case "Start Simulator":
                     exit = true;
                     trafficGenerator.generateFlights(flightCodes, arrivalTimes, arrivalLocations);
                     break;
@@ -140,10 +140,10 @@ public class UserInterface {
      */
     private static void printMenu() {
         System.out.println(
-                "AddFlight      - Add a plane to the Simulator\n" +
-                "GetFlights     - Show a list of flights\n" +
-                "GetAirports    - Show a list of airports\n" +
-                "StartSimulator - Start the simulator\n"
+                "Add Flight      - Add a plane to the Simulator\n" +
+                "Get Flights     - Show a list of flights\n" +
+                "Get Airports    - Show a list of airports\n" +
+                "Start Simulator - Start the simulator\n"
         );
     }
 }
