@@ -40,20 +40,28 @@ public class World {
     }
 
     /**
-     * The main loop of the program. Finds each airport in the world and requests that it controls traffic
+     * The main loop of the simulator
      */
     private static void simulateTraffic() {
-        while(running) {
-            if(airports.getAllAirports().isEmpty()) {
-                stopAirTraffic();
+        while(running) { // While the simulator is running,
+            if(airports.getAllAirports().isEmpty()) { // If there are no airports,
+                stopAirTraffic(); // Stop the simulator
+            } else { // Otherwise,
+                controlTraffic(); // Control the air traffic
+            }
+        }
+    }
+
+    /**
+     * Finds each airport in the world and requests that it controls its traffic. If the airport has no more incoming
+     * traffic, it is removed from the world.
+     */
+    private static void controlTraffic() {
+        for(Airport airport : airports.getAllAirports()) {
+            if(airport.hasNoIncomingTraffic()) {
+                getAirportRepository().removeAirport(airport.getID());
             } else {
-                for(Airport airport : airports.getAllAirports()) {
-                    if(airport.hasNoIncomingTraffic()) {
-                        getAirportRepository().removeAirport(airport.getID());
-                    } else {
-                        airport.getAirTrafficController().controlTraffic();
-                    }
-                }
+                airport.getAirTrafficController().controlTraffic();
             }
         }
     }
