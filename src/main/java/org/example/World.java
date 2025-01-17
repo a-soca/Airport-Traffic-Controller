@@ -13,7 +13,8 @@ public class World {
     public static void main(String[] args) {
         createAirports(); // Create the default airports specified in the requirements
 
-        MainMenu.run(); // Run the main menu to allow the user to choose the appropriate mode
+        MainMenu ui = new MainMenu();
+        ui.run(); // Run the main menu to allow the user to choose the appropriate mode
 
         // Start the simulation loop
         simulateTraffic();

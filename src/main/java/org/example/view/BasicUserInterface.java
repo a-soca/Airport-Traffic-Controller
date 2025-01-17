@@ -2,19 +2,19 @@ package org.example.view;
 
 import org.example.entities.Airport;
 import org.example.entities.Plane;
-import org.example.repository.AirportRepository;
 
 import java.time.LocalDateTime;
 
 import static org.example.World.getAirportRepository;
 import static org.example.World.stopAirTraffic;
 
-public class SimpleUserInterface extends UserInterface {
+public class BasicUserInterface extends UserInterface {
 
     /**
      * The simple user interface for manually landing individual planes
      */
-    public static void run() {
+    @Override
+    public void run() {
         /////////////////////////////
         // Perform user actions here
         /////////////////////////////
@@ -48,7 +48,7 @@ public class SimpleUserInterface extends UserInterface {
     /**
      * Manually attempt to land a plane at a chosen airport
      */
-    private static void landFlight() {
+    private void landFlight() {
         printAirports(); // Display the airport options
 
         // Take the airport input by the user
@@ -66,9 +66,25 @@ public class SimpleUserInterface extends UserInterface {
     }
 
     /**
+     * Method used to print the airports available in the world
+     */
+    protected void printAirports() {
+        if(getAirportRepository().getAllAirports().isEmpty()) { // If there are no airports,
+            System.out.println("No airports found"); // Print a message
+        } else { // Otherwise,
+            // Print every airport's information
+            for (Airport airport : getAirportRepository().getAllAirports()) {
+                System.out.println(airport.toString());
+            }
+            System.out.println();
+        }
+    }
+
+    /**
      * Prints the options available to the user
      */
-    private static void printMenu() {
+    @Override
+    protected void printMenu() {
         System.out.println(
                 "Land Plane     - Attempt to land a plane\n" +
                 "Get Airports   - Show a list of airports\n" +

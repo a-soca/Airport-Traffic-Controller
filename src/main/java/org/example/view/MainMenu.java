@@ -12,7 +12,7 @@ public class MainMenu extends UserInterface {
     /**
      * The basic user interface used to choose the specific mode of the program
      */
-    public static void run() {
+    public void run() {
         /////////////////////////////
         // Perform user actions here
         /////////////////////////////
@@ -25,11 +25,13 @@ public class MainMenu extends UserInterface {
             String option = scanner.nextLine();
             switch (option) {
                 case "Basic": // Basic single plane interface
-                    SimpleUserInterface.run();
+                    BasicUserInterface basicUI = new BasicUserInterface();
+                    basicUI.run();
                     exit = true;
                     break;
                 case "Manual Batch": // Manual Plane creation
-                    UserInterface.run();
+                    ManualBatchUserInterface manualUI = new ManualBatchUserInterface();
+                    manualUI.run();
                     exit = true;
                     break;
                 case "Automated Batch": // Automated Plane creation
@@ -53,7 +55,7 @@ public class MainMenu extends UserInterface {
     /**
      * Allows default parameters to be customised
      */
-    private static void settings() {
+    private void settings() {
         printTitle("Settings");
         System.out.println("Enter custom wait time between landings:");
 
@@ -75,7 +77,7 @@ public class MainMenu extends UserInterface {
     /**
      * Prints the options available to the user
      */
-    private static void printMenu() {
+    protected void printMenu() {
         System.out.println(
                 "Basic           - Land planes individually\n" +
                 "Manual Batch    - Generate a batch of scheduled flights\n" +
