@@ -6,10 +6,14 @@ import org.example.repository.AirportRepository;
 
 import java.time.LocalDateTime;
 
+import static org.example.World.getAirportRepository;
 import static org.example.World.stopAirTraffic;
 
 public class SimpleUserInterface extends UserInterface {
 
+    /**
+     * The simple user interface for manually landing individual planes
+     */
     public static void run() {
         /////////////////////////////
         // Perform user actions here
@@ -41,16 +45,21 @@ public class SimpleUserInterface extends UserInterface {
         }
     }
 
+    /**
+     * Manually attempt to land a plane at a chosen airport
+     */
     private static void landFlight() {
-        printAirports();
+        printAirports(); // Display the airport options
 
+        // Take the airport input by the user
         System.out.println("Enter arrival airport code: ");
         String arrivalAirport = scanner.nextLine();
 
-        Airport airport = AirportRepository.getAirport(arrivalAirport);
-        if (airport == null) {
-            printTitle("Error : Airport does not exist");
-        } else {
+        Airport airport = getAirportRepository().getAirport(arrivalAirport); // Find the airport object
+        if (airport == null) { // If it does not exist,
+            printTitle("Error : Airport does not exist"); // Print an error
+        } else { // Otherwise,
+            // Land a demo plane
             airport.getAirTrafficController().landPlane(new Plane("DEMO", LocalDateTime.now(), arrivalAirport));
             System.out.println();
         }

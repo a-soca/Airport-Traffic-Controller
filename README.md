@@ -18,3 +18,6 @@ Input a batch of planes to land at airports at specified delay times
 
 ### Automated Batch
 Use a CSV to generate a batch of flight plans and simulate their landings
+
+### Settings
+Specify a custom minimum delay between landings

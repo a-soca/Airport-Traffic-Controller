@@ -7,23 +7,38 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static org.example.World.getAirportRepository;
+
 public class Airport extends Location {
-    private final ArrayList<Plane> incomingFlights;
-    private final ArrayList<Plane> landedFlights;
-    private Duration landingTimeSeparation = Duration.ofSeconds(60);
+    private final ArrayList<Plane> incomingFlights; // Flights bound for this airport
+    private final ArrayList<Plane> landedFlights; // Flights which have landed at this airport
+    private Duration landingTimeSeparation = Duration.ofSeconds(60); // Default time 60s (following requirements)
 
-    private final AirTrafficController airTrafficController;
+    private final AirTrafficController airTrafficController; // The logic controller for the airport
 
+    // A possible extension would be adding a location repository to store multiple runways for each airport
+    // to improve landing efficiency
+
+    /**
+     * Airports are a {@link Location} that planes are able to land at.
+     * @param location The code used to identify the airport
+     */
     public Airport(String location) {
-        setID(location);
-        landedFlights = new ArrayList<>();
-        incomingFlights = new ArrayList<>();
+        super(location); // Set the airport identifier
 
-        airTrafficController = new AirTrafficController(this);
+        landedFlights = new ArrayList<>(); // Initialise arraylist to store landed flights
+        incomingFlights = new ArrayList<>(); // Initialise arraylist to store incoming flights
 
-        AirportRepository.addAirport(this);
+        airTrafficController = new AirTrafficController(this); // Create an air traffic controller for the airport
+
+        getAirportRepository().addAirport(this); // Add the airport to the repository
     }
 
+    /**
+     * Finds the time between the plane which last landed at this airport and the current time. Returns the
+     * {@link #landingTimeSeparation} if no planes have ever landed to prevent blocking.
+     * @return Time between previously landed plane and current time
+     */
     public Duration getTimeSinceLastArrival() {
         if(landedFlights.isEmpty()) { // If no planes have landed,
             return landingTimeSeparation; // Return a value which will not block other planes
@@ -33,6 +48,10 @@ public class Airport extends Location {
         LocalDateTime landTime = lastLanded.getArrivalTime(); // Get the arrival time
 
         return Duration.between(landTime, LocalDateTime.now()); // Get the time between now and the last arrival
+    }
+
+    public boolean hasNoIncomingTraffic() {
+        return incomingFlights.isEmpty();
     }
 
     public Duration getLandingTimeSeparation() {

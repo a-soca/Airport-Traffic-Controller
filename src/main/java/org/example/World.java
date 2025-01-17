@@ -1,27 +1,23 @@
 package org.example;
 
 import org.example.entities.Airport;
-import org.example.entities.Plane;
 import org.example.repository.AirportRepository;
-import org.example.repository.PlaneRepository;
 import org.example.view.MainMenu;
-import org.example.view.SimpleUserInterface;
-import org.example.view.UserInterface;
-
-import java.util.Scanner;
 
 public class World {
-    private static boolean running = true;
+    private static boolean running = true; // Used to escape the air traffic loop
+
+    // A static airport repository is used to store all the airports created for the world
+    private static final AirportRepository airports = new AirportRepository();
 
     public static void main(String[] args) {
-        createAirports();
+        createAirports(); // Create the default airports specified in the requirements
 
-        MainMenu.run();
+        MainMenu.run(); // Run the main menu to allow the user to choose the appropriate mode
 
         // Start the simulation loop
-        startControllingAirTraffic();
+        simulateTraffic();
     }
-
 
     private static void createAirports() {
         String[] airportCodes = new String[] {
@@ -35,20 +31,38 @@ public class World {
         }
     }
 
+    /**
+     * Automatically generates planes from a CSV
+     */
     public static void createPlanes() {
         TrafficGenerator trafficGenerator = new TrafficGenerator();
         trafficGenerator.readBlueprint();
     }
 
-    private static void startControllingAirTraffic() {
+    /**
+     * The main loop of the program. Finds each airport in the world and requests that it controls traffic
+     */
+    private static void simulateTraffic() {
         while(running) {
-            for(Airport airport : AirportRepository.getAllAirports()) {
-                airport.getAirTrafficController().controlTraffic();
+            if(airports.getAllAirports().isEmpty()) {
+                stopAirTraffic();
+            } else {
+                for(Airport airport : airports.getAllAirports()) {
+                    if(airport.hasNoIncomingTraffic()) {
+                        getAirportRepository().removeAirport(airport.getID());
+                    } else {
+                        airport.getAirTrafficController().controlTraffic();
+                    }
+                }
             }
         }
     }
 
     public static void stopAirTraffic() {
         running = false;
+    }
+
+    public static AirportRepository getAirportRepository() {
+        return airports;
     }
 }

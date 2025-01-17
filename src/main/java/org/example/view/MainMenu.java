@@ -1,16 +1,17 @@
 package org.example.view;
 
 import org.example.entities.Airport;
-import org.example.repository.AirportRepository;
 
 import java.util.Scanner;
 
-import static org.example.World.createPlanes;
-import static org.example.World.stopAirTraffic;
+import static org.example.World.*;
 
 public class MainMenu extends UserInterface {
     protected static final Scanner scanner = new Scanner(System.in); // Set the scanner source
 
+    /**
+     * The basic user interface used to choose the specific mode of the program
+     */
     public static void run() {
         /////////////////////////////
         // Perform user actions here
@@ -49,20 +50,24 @@ public class MainMenu extends UserInterface {
         }
     }
 
+    /**
+     * Allows default parameters to be customised
+     */
     private static void settings() {
         printTitle("Settings");
         System.out.println("Enter custom wait time between landings:");
 
         String waitTime = scanner.nextLine();
         int separation;
-        try {
+        try { // Attempt to convert the input to an integer
            separation = Integer.parseInt(waitTime);
-        } catch (NumberFormatException e) {
-            printTitle("Error : Invalid wait time");
+        } catch (NumberFormatException e) { // If the conversion fails,
+            printTitle("Error : Invalid wait time"); // Reset the menu and display the error
             return;
         }
 
-        for(Airport airport : AirportRepository.getAllAirports()) {
+        // Set the default waiting time between landings for all airports
+        for(Airport airport : getAirportRepository().getAllAirports()) {
             airport.setLandingTimeSeparation(separation);
         }
     }

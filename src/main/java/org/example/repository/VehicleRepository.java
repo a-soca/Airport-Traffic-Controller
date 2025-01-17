@@ -2,12 +2,14 @@ package org.example.repository;
 
 import org.example.entities.Vehicle;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class VehicleRepository {
     private final HashMap<String, Vehicle> vehicles;
 
+    /**
+     * A repository used to store {@link Vehicle} objects efficiently via a {@link HashMap}
+     */
     public VehicleRepository() {
         vehicles = new HashMap<>();
     }
@@ -20,16 +22,12 @@ public class VehicleRepository {
     public void removeVehicle(String id) {
         Vehicle vehicle = getVehicle(id); // Get the Vehicle object from the hashmap
 
-        if (vehicle != null) { // If the location is present,
+        if (vehicle != null) { // If the vehicle is present,
             this.vehicles.remove(vehicle.getID()); // Remove the Vehicle object from the hashmap
         }
     }
 
     public Vehicle getVehicle(String id) {
         return vehicles.get(id);
-    }
-
-    public ArrayList<Vehicle> getVehicles() {
-        return new ArrayList<>(vehicles.values());
     }
 }
